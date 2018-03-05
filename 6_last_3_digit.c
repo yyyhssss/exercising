@@ -1,5 +1,5 @@
 #include <stdio.h>
-main
+main()
 {
 int i,x,y,multi;
 multi=1;
