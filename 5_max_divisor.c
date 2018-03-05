@@ -4,7 +4,7 @@ main
 long i;
 int j;
 printf("Please input a number:");
-scanf("%ld", i)
+scanf("%ld", &i)
 for(j=999; j>=100; j--)
 {
   if(i%j==0)
