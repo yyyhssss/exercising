@@ -1,17 +1,18 @@
 #include <stdio.h>
 int main()
 {
-int i,n=0,final;
-long multi=1;
-printf("Please input a number(>=2):");
+int i,j,n=0,final;
+printf("Please input a number(>=5):");
 scanf("%d", &final);
-for(i=2; i<=final; i++)
+for(i=5; i<=final; i++)
 {
-  multi=multi*i;
-  while((multi%10)==0)
+  if(i%5==0)
   {
-    multi/=10;
     n++;
+    for(j=i/5; j>=5; j=j/5)
+    {
+      if(j%5==0) n++;
+    }
   }
 }
 printf("%d! has %d digit of 0", final, n);
