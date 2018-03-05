@@ -1,18 +1,27 @@
 #include <stdio.h>
 main
 {
-  int integer, i, max, min, sum;
+  int integer[10], i, max, min, sum,n_best,n_worst,average;
   max=-32768;
   min=32768;
   sum=0;
-  for(i=1; i<=10; i++)
+  n_best=0;
+  n_worst=0;
+  for(i=0; i<10; i++)
   {
-    printf("Input number %d=", i);
-    scanf("%d", &integer);
-    sum+= integer;
-    if(integer>max) max=integer;
-    if(integer<min) min=integer;
+    printf("Input number %d=", i+1);
+    scanf("%d", integer[i]);
+    sum+= integer[i];
+    if(integer[i]>max) max=integer;
+    if(integer[i]<min) min=integer;
+  }
+  average=(sum-max-min)/8;
+  for(i=0; i<10; i++)
+  {
+    if(abs(integer[i]-average)>abs(integer[n_worst]-average]) n_worst=i;
+    if(abs(integer[i]-average)<abs(integer[n_best]-average]) n_best=i;
   }
   printf("Canceled max score: %d\nCanceled min score %d\n", max, min);
   printf("Average score: %d", (sum-max-min)/8);
+  printf("Best judge: number %d\nWorst judge: number %d\n", n_best, n_worst);
 }
