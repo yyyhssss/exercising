@@ -1,5 +1,5 @@
 #include <stdio.h>
-main
+main()
 {
 long i;
 int j;
