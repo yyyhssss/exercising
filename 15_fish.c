@@ -3,7 +3,7 @@
 int main()
 {
 int temp1, temp2, temp3,temp4;
-for(temp1=3; ; temp1+=2)
+for(temp1=3; ; temp1+=4)
   {
   if((5*temp1+1)%4!=0) continue;
   else
