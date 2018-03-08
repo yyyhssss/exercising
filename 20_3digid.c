@@ -3,7 +3,7 @@
 int main()
 {
 int i,j,k,m,n;
-for(i=1;i<=6;i++)
+for(i=2;i<=6;i++)
   {
   for(j=0;j<=6;j++)
     {
