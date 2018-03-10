@@ -19,23 +19,13 @@ for(i=0;i<20;i++)
     }
   }
 m=0;
-for(i=1;i<20&&count<1000000;i++)
+for(i=1;i<20&&count<10000;i++)
   {
-  if(!flag) for(k=i+1;k<20;k++) q[k]=0;
+  if(i!=19) {for(k=i;k<20;k++) q[k]=0;}
   
-  printf("old:");
-  for(k=0;k<=i;k++)
-  {printf("%3d", q[k]);}
-  printf("\n");
-  
-  if(q[i]!=0)
-    {
-    for(m=0; s[q[i-1]-1][j]!=q[i];m++);
-    m++;
-    }
   for(j=m;s[q[i-1]-1][j]!=0;j++)
     {
-    for(k=0;k<i&&flag==1;k++)
+    for(k=0,flag=1;k<i&&flag==1;k++)
       {
       if(s[q[i-1]-1][j]==q[k]) flag=0;
       }
@@ -45,14 +35,35 @@ for(i=1;i<20&&count<1000000;i++)
       break;
       }
     }
-  if(s[q[i-1]-1][j]==0) i-=2;
+  if(s[q[i-1]-1][j]==0) 
+    {
+    i--;
+    for(m=0;s[q[i-1]-1][m]!=q[i];m++) ;
+    i--;
+    m++;
+    }
+  else m=0;
   
-  printf("new:");
-  for(k=0;k<=i;k++)
-  {printf("%3d", q[k]);}
-  printf("\n");
-  }
+  if(i==19&&q[19]!=0)
+    {
+      if(!fflag(q[19]+q[0]))
+        {
+        i--;
+        for(m=0;s[q[i-1]-1][m]!=q[i];m++) ;
+        i--;
+        m++; 
+        }
+      else
+        {
+          printf("queue:");
+          for(k=0;k<20;k++)
+              printf("%3d",q[k]);
+          printf("\n");
+        }
+    }
+
   count++;
+  }
 }
 
 int fflag(int n)
