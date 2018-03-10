@@ -33,6 +33,7 @@ for(i=1;i<N&&i>=1;i++)
     if(flag)
       {
       q[i]=s[q[i-1]-1][j];
+      if(s[q[i-1]-1][j]!=0) iflag=i;
       break;
       }
     }
@@ -57,12 +58,13 @@ for(i=1;i<N&&i>=1;i++)
         }
       else
         {
-        if(q[N-1]>q[1]) continue;
-        printf("queue:");
-        for(k=0;k<N;k++)
-            printf("%3d",q[k]);
-        printf("\n");
-        
+        if(q[N-1]>q[1])
+          {
+          printf("queue:");
+          for(k=0;k<N;k++)
+              printf("%3d",q[k]);
+          printf("iflag=%3d\n", iflag);
+          }    
         i=iflag;
         for(m=0;s[q[i-1]-1][m]!=q[i];m++) ;
         i--;
