@@ -1,31 +1,23 @@
-#include<cstdio> 
-#include<iostream>
-#include<cstdlib>
-#include<cmath>
 #include <time.h>
 #include <stdio.h>
 
 #define N 18
 
-using namespace std;
-bool b[N+1]={0,1};
+int b[N+1]={0,1};
 int total=0;
 int a[N+1]={0,1};
 void search(int t);
 void print();
-bool pd(int,int);
+int pd(int,int);
 int main()
 {
     time_t start,end;
-    double cost;
+    double cost=0;
     time(&start);
     search(2);
-    cout<<total;
-    cout<<endl;
     time(&end);
     cost=difftime(end,start);
     printf("cost is %f\n",cost);
-    getchar();
     return 0;
 } 
 void search( int t )
@@ -39,7 +31,7 @@ void search( int t )
             b[i]=1;
             if(t==N)  
             {
-                if (pd(a[N],a[1])) 
+                if (pd(a[N],a[1])&&a[N]>a[2]) 
                 {
                     print();
                 }
@@ -55,24 +47,24 @@ void search( int t )
 void print()
 {
     total++;
-    cout<<"<"<<total<<">";
-    for (int j=1;j<=N;j++)
-    {
-        cout<<a[j]<<" ";
-    }
+    //cout<<"<"<<total<<">";
+    //for (int j=1;j<=N;j++)
+    //{
+    //    cout<<a[j]<<" ";
+    //}
  
-    cout<<endl;
+    //cout<<endl;
 }
-bool pd(int x,int y)
+int pd(int x,int y)
 {
     int i=x+y;
     for (int k=2;k*k<=i;k++)
     {
         if(i%k== 0)
         {
-            return false;
+            return 0;
         }
     }
  
-    return true;          
+    return 1;          
 }

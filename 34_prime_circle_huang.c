@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <time.h>
-#define N 20
+#define N 18
 
 int fflag(int n);
 
@@ -10,7 +10,7 @@ int q[N]={1},s[N][10]={0};
 int i,j,k,sum,flag=1,m,iflag=N-2;
 long count=0;
 time_t start,end;
-double cost;
+double cost=0;
 time(&start);
 for(i=0;i<N;i++)
   {
@@ -66,10 +66,10 @@ for(i=1;i<N&&i>=1;i++)
         if(q[N-1]>q[1])
           {
           count++;
-          printf("queue%5ld:",count);
-          for(k=0;k<N;k++)
-              printf("%3d",q[k]);
-          printf("iflag=%3d\n", iflag);
+          //printf("queue%5ld:",count);
+          //for(k=0;k<N;k++)
+          //    printf("%3d",q[k]);
+          //printf("\n");
           }    
         i=iflag;
         for(m=0;s[q[i-1]-1][m]!=q[i];m++) ;
@@ -79,8 +79,10 @@ for(i=1;i<N&&i>=1;i++)
     }
   }
 time(&end);
+//printf("%ld\n",end); 
 cost=difftime(end,start);
-printf("%f/n",cost); 
+printf("%f\n",cost); 
+return 0;
 }
 
 int fflag(int n)
