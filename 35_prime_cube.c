@@ -3,7 +3,7 @@
 
 int number[210][5];         //所有可逆素数,第一列存该素数，后面4位为分解后数字
 int first[105];            //存储可放在第一行及第四行的素数的下标
-int array[4][5];            //素数幻方，第一列为素数下标
+int a[4];            //素数幻方，第一列为素数下标
 
 int count=0;                //number下标
 int firstcount=0;          //select下标
@@ -17,7 +17,7 @@ int comp(int n);             //与number中素数比较，检验是否为可逆�
 
 int main()
 {
-int i,j,k,flag;
+int i,j1,j2,k,flag1,flag2;
 for(i=1001;i<10000;i++)
   {
   k=i/1000;
@@ -36,18 +36,36 @@ for(i=1001;i<10000;i++)
 for(i=0;i<firstcount;i++)
   {
   a[0]=first[i];
-  for(j=0,flag=1;j<count;j++)
+  for(j1=0,flag1=1;j1<count;j1++)
     {
     for(k=1;k<=4;k++)
       {
-      llnum=number[a[0]][k]*10+number[j][k];
-      if(!comp(llnum)) 
+      llnum=number[a[0]][k]*10+number[j1][k];
+      if(!comp(llnum))        //前两行的数在列方向无法构成可逆素数
         {
-        flag=0;
-        break;
+        flag1=0;
+        break;                //跳出k循环
         }
       }
-    printf("Line 1:%d, line 2:%d\n", number[a[0]][0],number[a[1]][0]);
+    if(flag1)
+    {
+      a[1]=j1;
+      for(j2=0,flag2=1;j2<count;j2++)
+      {
+        for(k=1;k<=4;k++)
+        {
+          llnum=number[a[0]][k]*100+number[a[1]][k]*10+number[j2][k];
+          if(!comp(llnum))
+          {
+            flag2=0;
+            break;
+          }
+        }
+        if(flag2) a[2]=j2;
+      }
+    }
+      
+    printf("Line 1:%d, line 2:%d, line 3:%d\n", number[a[0]][0],number[a[1]][0],number[a[2]][0]);
     }
   }
 //for(i=0;i<count;i++)
@@ -96,7 +114,7 @@ for(k=1000;n/k==0;k/=10);
 k=1000/k;
 for(i=0;i<count;i++)
   {
-  if(n==number[i][0]/k) return(1);
+  if(n==(number[i][0]/k)) return(1);
   }
 return(0);
 }
