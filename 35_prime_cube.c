@@ -17,34 +17,34 @@ int comp(int n);             //与number中素数比较，检验是否为可逆�
 
 int main()
 {
-int i,j1,j2,k,flag1,flag2;
-for(i=1001;i<10000;i++)
+  int i,j1,j2,k,flag1,flag2;
+  for(i=1001;i<10000;i++)
   {
-  k=i/1000;
-  if(k%2!=0 && i%5!=0 && re_prime(i))
+    k=i/1000;
+    if(k%2!=0 && i%5!=0 && re_prime(i))
     {
-    number[count][0]=i;
-    process(count);
-    if(number[count][2]%2!=0
-      && number[count][3]%2!=0
-      && number[count][2]!=5
-      && number[count][3]!=5)
-      {first[firstcount++]=count;}
-    count++;
+      number[count][0]=i;
+      process(count);
+      if(number[count][2]%2!=0
+        && number[count][3]%2!=0
+        && number[count][2]!=5
+        && number[count][3]!=5)
+        {first[firstcount++]=count;}
+      count++;
     }
   }
-for(i=0;i<firstcount;i++)
+  for(i=0;i<firstcount;i++)
   {
-  a[0]=first[i];
-  for(j1=0,flag1=1;j1<count;j1++)
+    a[0]=first[i];
+    for(j1=0,flag1=1;j1<count;j1++)
     {
-    for(k=1;k<=4;k++)
+      for(k=1;k<=4;k++)
       {
-      llnum=number[a[0]][k]*10+number[j1][k];
-      if(!comp(llnum))        //前两行的数在列方向无法构成可逆素数
+        llnum=number[a[0]][k]*10+number[j1][k];
+        if(!comp(llnum))        //前两行的数在列方向无法构成可逆素数
         {
-        flag1=0;
-        break;                //跳出k循环
+          flag1=0;
+          break;                //跳出k循环
         }
       }
     if(flag1)
@@ -61,7 +61,10 @@ for(i=0;i<firstcount;i++)
             break;
           }
         }
-        if(flag2) a[2]=j2;
+        if(flag2) 
+	{
+	  a[2]=j2;
+	}
       }
     }
       
@@ -75,46 +78,46 @@ return(0);
 
 int prime(int n)
 {
-int i;
-if(n==2 || n==3)  return(1);
-for(i=2;i<=n/2;i++)
+  int i;
+  if(n==2 || n==3)  return(1);
+  for(i=2;i<=n/2;i++)
   {
-  if(n%i==0) return(0);
+    if(n%i==0) return(0);
   }
-return(1);
+  return(1);
 }
 
 int re_prime(int n)
 {
-int i,m=0,temp;
-temp=n;
-for(i=1000;i>=1;i/=10)
+  int i,m=0,temp;
+  temp=n;
+  for(i=1000;i>=1;i/=10)
   {
-  m+=temp%10*i;
-  temp/=10;
+    m+=temp%10*i;
+    temp/=10;
   }
-if(prime(n) && prime(m))  return(1);
-return(0);
+  if(prime(n) && prime(m))  return(1);
+  return(0);
 }
 
 int process(int n)
 {
-int i,temp;
-for(temp=number[n][0],i=4; i>=1; temp/=10,i--)
+  int i,temp;
+  for(temp=number[n][0],i=4; i>=1; temp/=10,i--)
   {
-  number[n][i]=temp%10;
+    number[n][i]=temp%10;
   }
-return(0);
+  return(0);
 }
 
 int comp(int n)
 {
-int i,k;
-for(k=1000;n/k==0;k/=10);
-k=1000/k;
-for(i=0;i<count;i++)
+  int i,k;
+  for(k=1000;n/k==0;k/=10);
+  k=1000/k;
+  for(i=0;i<count;i++)
   {
-  if(n==(number[i][0]/k)) return(1);
+    if(n==(number[i][0]/k)) return(1);
   }
-return(0);
+  return(0);
 }
