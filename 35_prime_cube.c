@@ -12,6 +12,7 @@ int reverse(int n);         //求逆序数
 int prime(int n);           //检验是否为素数
 int re_prime(int n);        //检验是否为可逆素数
 int process(int n);         //向number中填写数字
+int colnum(int i, int n);   //取第i列的n位数
 int compnum(int n);         //与number中素数比较，检验是否为可逆素数
 int comparray(int n);            //比较前n行是否能构成可逆素数
 
@@ -37,7 +38,7 @@ int main()
   for(i=0;i<firstcount;i++)
   {
     a[1]=first[i];
-    if(number[a[1]][1]>number[a[1]][4]) continue;
+    if(number[a[1]][1]>number[a[1]][4]) continue;           //左上角<=右上角
     for(a[2]=0;a[2]<count;a[2]++)
     {
       if(comparray(2))
@@ -45,17 +46,27 @@ int main()
         for(a[3]=0;a[3]<count;a[3]++)
         {
           if(comparray(3)) 
-	        {
+          {
             for(j=i+1;j<firstcount;j++)
             {
               a[4]=first[j];
+
+	      if(number[a[4]][1]<=number[a[1]][1]             //左上角<=左下角
+	        || colnum(1,4)<number[a[1]][0]                //第一列>第一行
+	        || (colnum(1,4)==number[a[1]][0] && colnum(2,4)<number[a[2]][0])           //第一列＝第一行并且第二列>第二行
+	        || reverse(number[a[4]][0])<number[a[1]][0]              //第四行反序>第一行
+	        || (reverse(number[a[4]][0])==number[a[1]][0] && reverse(number[a[3]][0])<number[a[2]][0]) )    //第三行反序>第二行
+		continue;
+
               if(comparray(4)) 
               {
+		
                 total++;
-                printf("No. %d: %d %d %d %d\n", total,number[a[1]][0],number[a[2]][0],number[a[3]][0],number[a[4]][0]);
+                //printf("No. %d\n%d\n%d\n%d\n%d\n", total,number[a[1]][0],number[a[2]][0],number[a[3]][0],number[a[4]][0]);
+                printf("No. %2d: %d  %d  %d  %d\n", total,number[a[1]][0],number[a[2]][0],number[a[3]][0],number[a[4]][0]);
               }
             }
-	        }
+	  }
         }
       }
     }
@@ -117,19 +128,33 @@ int compnum(int n)           //与number中素数比较，检验是否为可逆�
   return(0);
 }
 
+int colnum(int i, int n)           //取第i列的n位数
+{
+  int k,num=0;
+  for(k=1;k<=n;k++)
+    num=10*num+number[a[k]][i];
+  return num;
+}
+
 int comparray(int n)        //比较前n行是否能构成可逆素数
 {
-  int i,k,llnum,llnumii=0,llnumij=0;
+  int i,k,llnumii=0,llnumij=0;
   for(i=1;i<=4;i++)
   {
-    llnum=0;
-    for(k=1;k<=n;k++)
-      llnum=10*llnum+number[a[k]][i];          //判断列方向能否构成可逆素数
-    if(!compnum(llnum)) return(0);
+    if(!compnum(colnum(i,n))) return(0);      //判断列方向能否构成可逆素数
+
+//    if(i==1)                                   //第一列>=第一行
+//    {
+//      for(k=4-n;k>0;k--)
+//        llnum*=10;
+//      if(llnum<number[a[1]][0]) return(0);
+//    }
   }
+
   for(k=1;k<=n;k++)
     llnumii=10*llnumii+number[a[k]][k];
   if(!compnum(llnumii)) return(0);            //判断正对角方向能否构成可逆素数
+
   for(k=1;k<=n;k++)
     llnumij=10*llnumij+number[a[k]][5-k];
   if(!compnum(llnumij)) return(0);           //判断反对角方向能否构成可逆素数
