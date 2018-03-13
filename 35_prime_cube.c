@@ -7,8 +7,8 @@ int a[4];            //素数幻方，第一列为素数下标
 
 int count=0;                //number下标
 int firstcount=0;          //select下标
-int llnum;                  //前两行组成的列方向的两位数
-int lllnum;                 //前三行组成的列方向的三位数
+int llnum;                 //列方向组成的数
+int llnumii,llnumij;       //对角线方向组成的数
 
 int prime(int n);           //检验是否为素数
 int re_prime(int n);        //检验是否为可逆素数
@@ -17,7 +17,8 @@ int comp(int n);             //与number中素数比较，检验是否为可逆�
 
 int main()
 {
-  int i,j1,j2,k,flag1,flag2;
+  int i,j,k,flag1,flag2,flag3;
+  int total=0;
   for(i=1001;i<10000;i++)
   {
     k=i/1000;
@@ -36,39 +37,76 @@ int main()
   for(i=0;i<firstcount;i++)
   {
     a[0]=first[i];
-    for(j1=0,flag1=1;j1<count;j1++)
+    for(a[1]=0;a[1]<count;a[1]++)
     {
+      flag1=1;
       for(k=1;k<=4;k++)
       {
-        llnum=number[a[0]][k]*10+number[j1][k];
-        if(!comp(llnum))        //前两行的数在列方向无法构成可逆素数
+        llnum=number[a[0]][k]*10+number[a[1]][k];
+        if(!comp(llnum))        //列方向无法构成可逆素数
         {
           flag1=0;
           break;                //跳出k循环
         }
       }
-    if(flag1)
-    {
-      a[1]=j1;
-      for(j2=0,flag2=1;j2<count;j2++)
+      if(flag1)
       {
-        for(k=1;k<=4;k++)
-        {
-          llnum=number[a[0]][k]*100+number[a[1]][k]*10+number[j2][k];
-          if(!comp(llnum))
-          {
-            flag2=0;
-            break;
-          }
-        }
-        if(flag2) 
-	{
-	  a[2]=j2;
-	}
+        llnumii=number[a[0]][1]*10+number[a[1]][2];
+        llnumij=number[a[0]][4]*10+number[a[1]][3];
+        if((!comp(llnumii)) || (!comp(llnumij)))  {flag1=0;}        //对角线方向无法构成可逆素数
       }
-    }
+      if(flag1)
+      {
+        for(a[2]=0;a[2]<count;a[2]++)
+        {
+          flag2=1;
+          for(k=1;k<=4;k++)
+          {
+            llnum=number[a[0]][k]*100+number[a[1]][k]*10+number[a[2]][k];
+            if(!comp(llnum))
+            {
+              flag2=0;
+              break;
+            }
+          }
+          if(flag2)
+          {
+            llnumii=number[a[0]][1]*100+number[a[1]][2]*10+number[a[2]][3];
+            llnumij=number[a[0]][4]*100+number[a[1]][3]*10+number[a[2]][2];
+            if((!comp(llnumii)) || (!comp(llnumij)))  flag2=0;
+          }
+          if(flag2) 
+	        {
+            for(j=0;j<firstcount;j++)
+            {
+              flag3=1;
+              a[3]=first[j];
+              for(k=1;k<=4;k++)
+              {
+                llnum=number[a[0]][k]*1000+number[a[1]][k]*100+number[a[2]][k]*10+number[a[3]][k];
+                if(!comp(llnum))
+                {
+                  flag3=0;
+                  break;
+                }
+              }
+              if(flag3)
+              {
+                llnumii=number[a[0]][1]*1000+number[a[1]][2]*100+number[a[2]][3]*10+number[a[3]][4];
+                llnumij=number[a[0]][4]*1000+number[a[1]][3]*100+number[a[2]][2]*10+number[a[3]][1];
+                if((!comp(llnumii)) || (!comp(llnumij)))  flag3=0;
+              }
+              if(flag3) 
+              {
+                total++;
+                printf("No. %d: %d %d %d %d\n", total,number[a[0]][0],number[a[1]][0],number[a[2]][0],number[a[3]][0]);
+              }
+            }
+	        }
+        }
+      }
       
-    printf("Line 1:%d, line 2:%d, line 3:%d\n", number[a[0]][0],number[a[1]][0],number[a[2]][0]);
+   // printf("Line 1:%d, line 2:%d, line 3:%d\n", number[a[0]][0],number[a[1]][0],number[a[2]][0]);
     }
   }
 //for(i=0;i<count;i++)
