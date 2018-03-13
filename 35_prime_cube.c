@@ -8,7 +8,7 @@ int a[5];            //素数幻方，第一列为素数下标
 int count=0;                //number下标
 int firstcount=0;          //select下标
 
-
+int reverse(int n);         //求逆序数
 int prime(int n);           //检验是否为素数
 int re_prime(int n);        //检验是否为可逆素数
 int process(int n);         //向number中填写数字
@@ -37,6 +37,7 @@ int main()
   for(i=0;i<firstcount;i++)
   {
     a[1]=first[i];
+    if(number[a[1]][1]>number[a[1]][4]) continue;
     for(a[2]=0;a[2]<count;a[2]++)
     {
       if(comparray(2))
@@ -45,7 +46,7 @@ int main()
         {
           if(comparray(3)) 
 	        {
-            for(j=0;j<firstcount;j++)
+            for(j=i+1;j<firstcount;j++)
             {
               a[4]=first[j];
               if(comparray(4)) 
@@ -57,13 +58,22 @@ int main()
 	        }
         }
       }
-      
-   // printf("Line 1:%d, line 2:%d, line 3:%d\n", number[a[0]][0],number[a[1]][0],number[a[2]][0]);
     }
   }
 //for(i=0;i<count;i++)
 //  {printf((i+1)%8 ? "%d:%d %d %d %d  ":"%d:%d %d %d %d\n", number[i][0],number[i][1],number[i][2],number[i][3],number[i][4]);}
 return(0);
+}
+
+int reverse(int n)
+{
+  int i,m=0;
+  for(i=1000;i>=1;i/=10)
+  {
+    m+=n%10*i;
+    n/=10;
+  }
+  return m;
 }
 
 int prime(int n)                   //检验是否为素数
@@ -79,13 +89,8 @@ int prime(int n)                   //检验是否为素数
 
 int re_prime(int n)            //检验是否为可逆素数
 {
-  int i,m=0,temp;
-  temp=n;
-  for(i=1000;i>=1;i/=10)
-  {
-    m+=temp%10*i;
-    temp/=10;
-  }
+  int m;
+  m=reverse(n);
   if(prime(n) && prime(m))  return(1);
   return(0);
 }
